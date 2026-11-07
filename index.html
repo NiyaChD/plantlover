@@ -14,9 +14,11 @@
 <meta name="apple-mobile-web-app-title" content="PlantLover">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <style>
-html, body { margin: 0; background: #141B18; -webkit-tap-highlight-color: transparent; }
-body { min-height: 100vh; min-height: 100dvh; }
-#app { min-height: 100vh; min-height: 100dvh; }
+html, body { margin: 0; height: 100%; overflow: hidden; background: #141B18; -webkit-tap-highlight-color: transparent; -webkit-text-size-adjust: 100%; }
+#app { position: fixed; top: 0; right: 0; bottom: 0; left: 0; padding-top: env(safe-area-inset-top); box-sizing: border-box; }
+#app > div { height: 100%; }
+/* items in a scrolling column keep their size and scroll instead of being squeezed */
+.pl-scroll > * { flex-shrink: 0; }
 </style>
 </head>
 <body>

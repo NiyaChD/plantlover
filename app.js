@@ -33,10 +33,25 @@
     var root = tpl.content.firstElementChild;
     if (root) {
       var st = root.getAttribute('style') || '';
-      st = st.replace(/width:\s*390px;\s*height:\s*\d+px;/, 'width: 100%; max-width: 480px; margin: 0 auto; height: 100vh; height: 100dvh; overflow-y: auto; overflow-x: hidden;')
+      st = st.replace(/width:\s*390px;\s*height:\s*\d+px;/, 'width: 100%; max-width: 480px; margin: 0 auto; height: 100%; overflow-y: auto; overflow-x: hidden;')
         .replace(/;\s*overflow:\s*hidden/, '');
       root.setAttribute('style', st);
     }
+    // Safari ignores bottom padding at the end of a scrolling flex column, so the last
+    // items could not be scrolled into view. Move that padding into a real spacer.
+    Array.prototype.forEach.call(tpl.content.querySelectorAll('[style]'), function (el) {
+      var st = el.getAttribute('style');
+      if (!/overflow-y:\s*auto/.test(st)) return;
+      var pb = 0, m = /(?:^|;)\s*padding:\s*([^;]+)/.exec(st);
+      if (m) { var parts = m[1].trim().split(/\s+/); pb = parseFloat(parts.length >= 3 ? parts[2] : parts[0]) || 0; }
+      var m2 = /padding-bottom:\s*([\d.]+)px/.exec(st); if (m2) pb = parseFloat(m2[1]);
+      el.setAttribute('style', st + '; padding-bottom: 0; -webkit-overflow-scrolling: touch; overscroll-behavior: contain');
+      el.setAttribute('class', ((el.getAttribute('class') || '') + ' pl-scroll').trim());
+      var spacer = document.createElement('div');
+      spacer.setAttribute('aria-hidden', 'true');
+      spacer.setAttribute('style', 'flex: 0 0 auto; width: 100%; height: calc(' + pb + 'px + env(safe-area-inset-bottom))');
+      el.appendChild(spacer);
+    });
     Array.prototype.forEach.call(tpl.content.querySelectorAll('nav[style]'), function (nav) {
       nav.setAttribute('style', nav.getAttribute('style').replace('position: absolute; left: 16px; right: 16px; bottom: 18px',
         'position: fixed; z-index: 5; left: max(16px, calc(50% - 224px)); right: max(16px, calc(50% - 224px)); bottom: calc(18px + env(safe-area-inset-bottom))'));
