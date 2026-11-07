@@ -25,12 +25,12 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #141B18; -we
 <div id="screen-head"></div>
 <div id="app"></div>
 <noscript>PlantLover needs JavaScript to run.</noscript>
-<script src="preact.min.js"></script>
-<script src="config.js"></script>
-<script src="screens.js"></script>
-<script src="app.js"></script>
+<script src="preact.min.js?v=400ca39019"></script>
+<script src="config.js?v=2f2d2ea9fa"></script>
+<script src="screens.js?v=c831b79bd9"></script>
+<script src="app.js?v=90b99e0fbd"></script>
 <script>
-if ('serviceWorker' in navigator) { window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); }); }
+if ('serviceWorker' in navigator) { window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(function (r) { r.update(); }).catch(function () {}); }); }
 </script>
 </body>
 </html>
