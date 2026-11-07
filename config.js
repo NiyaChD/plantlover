@@ -4,5 +4,5 @@
    The key is visible to anyone, so in your Pl@ntNet account tick "expose my API key" and
    add https://niyachd.github.io under "Authorized domains" so only this site can use it. */
 window.PL_CONFIG = {
-  plantnetKey: ''
+  plantnetKey: '2b10JllzB4vpK9MuoFNBkS89O'
 };
