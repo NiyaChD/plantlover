@@ -12,6 +12,14 @@ A clickable prototype of PlantLover, a plant care app with a virtual garden. It 
 `demo@plantlover.app` / `plants2026`, or create your own account with Sign up.
 In Forgot password, the prototype code is **48213**.
 
+## Real plant identification (Pl@ntNet)
+"Add a plant" can identify the photo for real with the free [Pl@ntNet API](https://my.plantnet.org).
+1. Create a free account at https://my.plantnet.org and open your API key settings.
+2. Tick **expose my API key** and add `https://niyachd.github.io` under **Authorized domains**.
+3. Put the key in `config.js` (`plantnetKey: '...'`) and commit.
+
+Without a key the app shows a demo result (Moth orchid), as in the design prototype.
+
 ## Good to know
 - Everything (accounts, plants, watering, wish list, photos) is saved only on that phone, in the browser. Nothing is sent to a server.
 - To start fresh for a new test participant, use a private/incognito tab, or clear the site data.
