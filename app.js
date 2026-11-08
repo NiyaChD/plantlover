@@ -52,6 +52,10 @@
       spacer.setAttribute('style', 'flex: 0 0 auto; width: 100%; height: calc(' + pb + 'px + env(safe-area-inset-bottom))');
       el.appendChild(spacer);
     });
+    // achievement pop-up stays at the top of the screen while scrolling
+    Array.prototype.forEach.call(tpl.content.querySelectorAll('[style*="position: absolute; left: 16px; right: 16px; top: 16px"]'), function (el) {
+      el.setAttribute('style', el.getAttribute('style').replace('position: absolute; left: 16px; right: 16px; top: 16px', 'position: fixed; left: max(16px, calc(50% - 224px)); right: max(16px, calc(50% - 224px)); top: calc(12px + env(safe-area-inset-top))'));
+    });
     Array.prototype.forEach.call(tpl.content.querySelectorAll('nav[style]'), function (nav) {
       nav.setAttribute('style', nav.getAttribute('style').replace('position: absolute; left: 16px; right: 16px; bottom: 18px',
         'position: fixed; z-index: 5; left: max(16px, calc(50% - 224px)); right: max(16px, calc(50% - 224px)); bottom: calc(18px + env(safe-area-inset-bottom))'));
