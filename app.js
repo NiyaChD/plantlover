@@ -161,7 +161,11 @@
   // ---------- Navigation ----------
   var mount = document.getElementById('app');
   var headSlot = document.getElementById('screen-head');
-  function current() { var m = /^#\/([\w-]+)/.exec(location.hash); return m && SCREENS[m[1]] ? m[1] : START; }
+  // Stay logged in: someone who logged in (or signed up) on this device opens straight into the garden
+  // until they tap Log out. The welcome screen is only the start for people who are not logged in.
+  function loggedIn() { try { return !!window.localStorage.getItem('plantlover-current'); } catch (e) { return false; } }
+  function current() { var m = /^#\/([\w-]+)/.exec(location.hash); return m && SCREENS[m[1]] ? m[1] : (loggedIn() ? 'Home' : START); }
+  if (!/^#\/[\w-]+/.test(location.hash) || location.hash === '#/Main') { if (loggedIn()) history.replaceState(null, '', '#/Home'); }
   function go(name) { if (current() === name) draw(); else location.hash = '#/' + name; }
   function draw() {
     var name = current(), d = prep(name);
